@@ -49,7 +49,6 @@ function App() {
 
   // Modal
   function handleClick(event) {
-    console.log(event.target.src);
     setModal({ show: true, url: event.target.src });
   }
 
