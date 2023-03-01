@@ -1,7 +1,7 @@
 function Image({ src }) {
   return (
-    <div>
-      <img src={src} />
+    <div className="flex items-center justify-center">
+      <img src={src} className="rounded shadow" />
     </div>
   );
 }
