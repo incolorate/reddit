@@ -1,12 +1,16 @@
 import { useEffect, useState } from "react";
 import Nav from "./components/Nav";
 import Image from "./components/Image";
+import Modal from "./components/Modal";
 import { nanoid } from "nanoid";
 function App() {
   let [images, setImages] = useState([]);
   let [user, setUser] = useState("Alaric_Darconville");
   let [isLoading, setIsLoading] = useState(true);
-
+  let [modal, setModal] = useState({
+    show: false,
+    url: "",
+  });
   // Get images
   useEffect(() => {
     async function fetchMyAPI() {
@@ -26,7 +30,6 @@ function App() {
       setIsLoading(false);
     }
     fetchMyAPI();
-    console.log(user);
   }, [user]);
 
   // Only images
@@ -34,15 +37,24 @@ function App() {
     image === undefined || !image.includes("i.redd.it") ? (
       ""
     ) : (
-      <Image src={image} key={nanoid()} />
+      <Image src={image} key={nanoid()} handleClick={handleClick} />
     )
   );
 
   // Handle submit,
   function handleSubmit(event) {
     event.preventDefault();
-    console.log(event.target.value);
     setUser(event.target.value);
+  }
+
+  // Modal
+  function handleClick(event) {
+    console.log(event.target.src);
+    setModal({ show: true, url: event.target.src });
+  }
+
+  function closeModal(event) {
+    setModal({ show: false, url: "" });
   }
 
   return (
@@ -50,7 +62,11 @@ function App() {
       <Nav handleSubmit={handleSubmit} />
       <div className="items-center justify-center h-screen max-w-screen-lg m-7">
         {isLoading ? (
-          <div>Loading</div>
+          <div className="flex justify-center items-center h-screen">
+            <div className="flex items-center justify-center ">
+              <div className="w-40 h-40 border-t-4 border-b-4 border-green-900 rounded-full animate-spin"></div>
+            </div>
+          </div>
         ) : (
           <div>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
@@ -59,6 +75,7 @@ function App() {
           </div>
         )}
       </div>
+      <Modal show={modal.show} url={modal.url} handleClick={closeModal} />
     </div>
   );
 }
