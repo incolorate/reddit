@@ -57,9 +57,9 @@ function App() {
   }
 
   return (
-    <div>
+    <div className="container mx-auto">
       <Nav handleSubmit={handleSubmit} />
-      <div className="items-center justify-center h-screen max-w-screen-lg m-7">
+      <div className="m-7">
         {isLoading ? (
           <div className="flex justify-center items-center h-screen">
             <div className="flex items-center justify-center ">
